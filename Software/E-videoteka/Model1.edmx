@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PI2247_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AktivnostKorisnika">
+          <Key>
+            <PropertyRef Name="ID_Korisnik" />
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="ID_Korisnik" Type="int" Nullable="false" />
+          <Property Name="ID_Film" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="date" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="ID_Film" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GodinaIzdanja" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kategorija" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Trajanje" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LokacijaFilma" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Odobren" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Korsinik" Type="int" Nullable="false" />
+          <Property Name="Gledan" Type="int" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="ID_Korisnik" />
+          </Key>
+          <Property Name="ID_Korisnik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prezime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Uloga" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adresa" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AktivnostKorisnika_Film">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="AktivnostKorisnika" Type="Self.AktivnostKorisnika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="ID_Film" />
+            </Principal>
+            <Dependent Role="AktivnostKorisnika">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AktivnostKorisnika_Korisnik">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+          <End Role="AktivnostKorisnika" Type="Self.AktivnostKorisnika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID_Korisnik" />
+            </Principal>
+            <Dependent Role="AktivnostKorisnika">
+              <PropertyRef Name="ID_Korisnik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Korisnici">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID_Korisnik" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="ID_Korsinik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PI2247_DBModelStoreContainer">
+          <EntitySet Name="AktivnostKorisnika" EntityType="Self.AktivnostKorisnika" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AktivnostKorisnika_Film" Association="Self.FK_AktivnostKorisnika_Film">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="AktivnostKorisnika" EntitySet="AktivnostKorisnika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AktivnostKorisnika_Korisnik" Association="Self.FK_AktivnostKorisnika_Korisnik">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="AktivnostKorisnika" EntitySet="AktivnostKorisnika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Korisnici" Association="Self.FK_Film_Korisnici">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PI2247_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AktivnostKorisnika">
+          <Key>
+            <PropertyRef Name="ID_Korisnik" />
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="ID_Korisnik" Type="Int32" Nullable="false" />
+          <Property Name="ID_Film" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_AktivnostKorisnika_Film" FromRole="AktivnostKorisnika" ToRole="Film" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_AktivnostKorisnika_Korisnik" FromRole="AktivnostKorisnika" ToRole="Korisnik" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="ID_Film" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GodinaIzdanja" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kategorija" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Trajanje" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LokacijaFilma" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Odobren" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Korsinik" Type="Int32" Nullable="false" />
+          <Property Name="Gledan" Type="Int32" />
+          <NavigationProperty Name="AktivnostKorisnikas" Relationship="Self.FK_AktivnostKorisnika_Film" FromRole="Film" ToRole="AktivnostKorisnika" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Film_Korisnici" FromRole="Film" ToRole="Korisnik" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="ID_Korisnik" />
+          </Key>
+          <Property Name="ID_Korisnik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Uloga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AktivnostKorisnikas" Relationship="Self.FK_AktivnostKorisnika_Korisnik" FromRole="Korisnik" ToRole="AktivnostKorisnika" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_Film_Korisnici" FromRole="Korisnik" ToRole="Film" />
+        </EntityType>
+        <Association Name="FK_AktivnostKorisnika_Film">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="AktivnostKorisnika" Type="Self.AktivnostKorisnika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="ID_Film" />
+            </Principal>
+            <Dependent Role="AktivnostKorisnika">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AktivnostKorisnika_Korisnik">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+          <End Role="AktivnostKorisnika" Type="Self.AktivnostKorisnika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID_Korisnik" />
+            </Principal>
+            <Dependent Role="AktivnostKorisnika">
+              <PropertyRef Name="ID_Korisnik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Korisnici">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID_Korisnik" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="ID_Korsinik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PI2247_DBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AktivnostKorisnikas" EntityType="Self.AktivnostKorisnika" />
+          <EntitySet Name="Films" EntityType="Self.Film" />
+          <EntitySet Name="Korisniks" EntityType="Self.Korisnik" />
+          <AssociationSet Name="FK_AktivnostKorisnika_Film" Association="Self.FK_AktivnostKorisnika_Film">
+            <End Role="Film" EntitySet="Films" />
+            <End Role="AktivnostKorisnika" EntitySet="AktivnostKorisnikas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AktivnostKorisnika_Korisnik" Association="Self.FK_AktivnostKorisnika_Korisnik">
+            <End Role="Korisnik" EntitySet="Korisniks" />
+            <End Role="AktivnostKorisnika" EntitySet="AktivnostKorisnikas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Korisnici" Association="Self.FK_Film_Korisnici">
+            <End Role="Korisnik" EntitySet="Korisniks" />
+            <End Role="Film" EntitySet="Films" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PI2247_DBModelStoreContainer" CdmEntityContainer="PI2247_DBEntities1">
+          <EntitySetMapping Name="AktivnostKorisnikas">
+            <EntityTypeMapping TypeName="PI2247_DBModel.AktivnostKorisnika">
+              <MappingFragment StoreEntitySet="AktivnostKorisnika">
+                <ScalarProperty Name="ID_Korisnik" ColumnName="ID_Korisnik" />
+                <ScalarProperty Name="ID_Film" ColumnName="ID_Film" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="PI2247_DBModel.Film">
+              <MappingFragment StoreEntitySet="Film">
+                <ScalarProperty Name="ID_Film" ColumnName="ID_Film" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="GodinaIzdanja" ColumnName="GodinaIzdanja" />
+                <ScalarProperty Name="Kategorija" ColumnName="Kategorija" />
+                <ScalarProperty Name="Trajanje" ColumnName="Trajanje" />
+                <ScalarProperty Name="LokacijaFilma" ColumnName="LokacijaFilma" />
+                <ScalarProperty Name="Odobren" ColumnName="Odobren" />
+                <ScalarProperty Name="ID_Korsinik" ColumnName="ID_Korsinik" />
+                <ScalarProperty Name="Gledan" ColumnName="Gledan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisniks">
+            <EntityTypeMapping TypeName="PI2247_DBModel.Korisnik">
+              <MappingFragment StoreEntitySet="Korisnik">
+                <ScalarProperty Name="ID_Korisnik" ColumnName="ID_Korisnik" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Uloga" ColumnName="Uloga" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
